@@ -9,41 +9,14 @@
 
 <!-- Debe leerse casi igual que tu árbol de análisis descendente (sección 6 del README). -->
 
-```text
-1. MOSTRAR "Bienvenido a mi programa"
-
-```
-
-## Recetas de los módulos
-
-<!-- Para cada módulo: qué recibe, qué hace y qué devuelve. -->
-
-### `calcularIVA`
-
-```text
-MODULO calcularIVA(_____)
-
-FIN MODULO
-```
-
-### `imprimirTicket`
-
-```text
-MODULO imprimirTicket(_____)
-
-FIN MODULO
-```
-
-### `calcularPorcentaje` (Fase 4)
-
-```text
-MODULO calcularPorcentaje(_____)
-
-FIN MODULO
-```
-
-### Otros módulos que agregues (por ejemplo, para tu reto)
-
-```text
-
-```
+1. Mostrar mensaje de bienvenida al sistema de ventas.
+2. Pedir el nombre del producto y leerlo (utilizando utilerias.h).
+3. Pedir el precio unitario y validar mediante un ciclo que sea mayor a 0.
+4. Pedir la cantidad de piezas y validar mediante un ciclo que sea mayor a 0.
+5. Pedir el porcentaje de descuento y validar mediante un ciclo que esté entre 0 y 100.
+6. Calcular el subtotal llamando a la función calcularSubtotal(precio, cantidad).
+7. Calcular el monto del descuento llamando a la función calcularPorcentaje
+8. Obtener la base imponible restando el descuento al subtotal.
+9. Calcular el IVA llamando a la función calcularPorcentaje
+10. Calcular el total final sumando la base imponible y el IVA.
+11. Llamar al procedimiento imprimirTicket con todos los valores calculados y los datos del producto.

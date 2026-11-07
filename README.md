@@ -6,7 +6,7 @@
 ## 1. Descripción del problema (Fase 1)
 <!-- Explica con tus palabras qué hace tu programa y para qué serviría en la vida real. Máximo 4 líneas. -->
 
-_____
+Mi programa sirve para registrar la venta de un producto y calcular cuánto debe pagar el cliente. Solicita el nombre, precio, cantidad y descuento, valida que los datos sean correctos y calcula el IVA. Al final muestra un ticket con el desglose de la compra.
 
 ## 2. Entradas y salidas (Fase 1)
 <!-- Define cada entrada y cada salida, con su tipo de dato y la función de utilerias.h con la que la vas a leer. -->
@@ -15,16 +15,16 @@ _____
 
 | Entrada | Tipo de dato | Función de `utilerias.h` |
 |---|---|---|
-| _____ | _____ | _____ |
-| _____ | _____ | _____ |
-| _____ | _____ | _____ |
-| _____ | _____ | _____ |
+| Nombre del producto | string | leerCadena0 |
+| precio | double | leerDecimal0 |
+| cantidad | int | leerEntero0 |
+| descuento | double | leerDecimal0 |
 
 **Salida** (¿qué datos muestra el ticket?):
-_____
+Muestra el nombre del producto, cantidad de piezas, precio unitario, subtotal, monto del descuento, IVA y total a pagar.
 
 **¿El IVA se calcula sobre el subtotal o sobre lo que queda después del descuento? ¿Por qué?**
-_____
+Se calcula sobre lo que queda después del descuento, porque primero se resta el descuento al subtotal y después se aplica el IVA al resultado.
 
 ## 3. Restricciones e invariante (Fases 1 y 2)
 
@@ -32,40 +32,40 @@ _____
 
 | Dato | ¿Qué valores son válidos? | ¿Por qué? |
 |---|---|---|
-| Nombre del producto | _____ | _____ |
-| Precio | _____ | _____ |
-| Cantidad | _____ | _____ |
-| Descuento (%) | _____ | _____ |
+| Nombre del producto | texto con el nombre del producto | para identificar que se esta vendiendo |
+| Precio | mayor que 0 | porque un producto debe tener un precio positivo |
+| Cantidad | entero mayor que 0 | porque se debe vender al emnos una pieza |
+| Descuento (%) | entre 0 y 99 | Para evitar descuentos negativos o mayores al límite permitido. |
 
 **¿Qué hace mi programa si el usuario escribe un dato fuera de rango?**
-_____
+Muestra un mensaje de error y vuelve a solicitar el dato hasta que el usuario escriba un valor válido.
 
 **¿Puede el total salir negativo? ¿Por qué?**
-_____
+No, porque el precio y la cantidad deben ser mayores que cero y el descuento está limitado entre 0 y 99 por ciento. Además, el IVA se suma al importe después del descuento.
 
 **Invariante 1** (después del ciclo que valida el precio, ¿qué es siempre cierto sobre `precio`?):
-_____
+Que el precio siempre será mayor que cero.
 
 **Invariante 2** (¿qué relación se cumple siempre entre el subtotal, el descuento, el IVA y el total?):
-_____
+El total siempre es igual al subtotal menos el descuento, más el IVA calculado sobre la cantidad restante.
 
 ## 4. Casos resueltos a mano (Fase 1)
 
 | Caso | Nombre | Precio | Cantidad | Descuento (%) | Subtotal | Descuento ($) | IVA | Total |
 |---|---|---|---|---|---|---|---|---|
-| 1 (sin descuento) | _____ | _____ | _____ | _____ | _____ | _____ | _____ | _____ |
-| 2 (con descuento) | _____ | _____ | _____ | _____ | _____ | _____ | _____ | _____ |
-| 3 (precio con centavos) | _____ | _____ | _____ | _____ | _____ | _____ | _____ | _____ |
+| 1 (sin descuento) | Cuaderno | 50 | 2 | 0 | 100 | 0 | 16 | 116 |
+| 2 (con descuento) | Cuaderno | 50 | 2 | 10 | 100 | 10 | 14.40 | 104.40 |
+| 3 (precio con centavos) | Pluma | 19.99 | 1 | 0| 19.99 | 0 | 3.20 | 23.19 |
 
 ## 5. Tipo de dato abstracto (Fase 1)
 
 | TDA | Datos (¿qué tiene?) | Operaciones (¿qué se puede hacer con él?) |
 |---|---|---|
-| Producto | nombre (texto), _____, _____ | calcular su subtotal |
-| _____ | _____ | _____ |
+| Producto | nombre, precio, cantidad | calcular su subtotal |
+| venta | subtotal, descuento, iva, total | calcular el importe final e imprimir el ticket |
 
 **Jerarquías:** una tienda vende productos por pieza (un cuaderno) y productos por peso (un kilo de tortillas). ¿Los dos son productos? ¿Qué datos tienen en común y cuál cambia?
-_____
+Sí, los dos son productos porque se pueden vender en una tienda. Ambos tienen nombre y precio, pero cambia la manera de medirlos: uno se vende por piezas y el otro por peso, como los kilogramos.
 
 ## 6. Análisis descendente (Fase 2)
 <!-- Completa el árbol. Marca con (ya existe) las partes que ya resuelve una función de utilerias.h o de ticket.h. -->
@@ -75,22 +75,22 @@ Generar ticket de compra
 ├── 1. Mostrar bienvenida
 ├── 2. Pedir los datos
 │     ├── 2.1 Pedir el nombre del producto
-│     ├── 2.2 Pedir el precio (y validar que _____)
-│     ├── 2.3 _____
-│     └── 2.4 _____
+│     ├── 2.2 Pedir el precio (y validar que sea mayor que 0)
+│     ├── 2.3  Pedir la cantidad y validar que sea mayor que 0
+│     └── 2.4  Pedir el descuento y validar que esté entre 0 y 99
 ├── 3. Calcular los importes
 │     ├── 3.1 Calcular el subtotal
-│     ├── 3.2 _____
-│     ├── 3.3 _____
-│     └── 3.4 _____
-└── 4. _____
+│     ├── 3.2 Calcular el monto del descuento
+    ├── 3.3 Calcular la base imponible y el IVA
+     └── 3.4 Calcular el total
+└── 4. Imprimir el tikcet de compra
 ```
 
 **Análisis ascendente: ¿qué partes del árbol ya estaban resueltas por una función que existe? ¿Cuáles?**
-_____
+Las funciones que ya estaban resueltas eran leerCadena(), leerDecimal(), leerEntero() e imprimirTicket(). Estas funciones ayudan a solicitar los datos y mostrar el resultado sin tener que escribir todo directamente en main().
 
 **¿Alguna parte del árbol hacía más de una cosa? ¿Cómo la dividiste?**
-_____
+Sí, la parte de calcular los importes realizaba varias operaciones. La dividí en subtotal, descuento, IVA y total para que cada cálculo fuera más fácil de entender y revisar.
 
 ## 7. Módulos y receta (Fase 2)
 
@@ -98,14 +98,16 @@ _____
 |---|---|---|---|
 | `calcularSubtotal` | precio, cantidad | el subtotal | Función |
 | `calcularDescuento` | subtotal, porcentaje | el monto del descuento | Función |
-| `calcularIVA` | _____ | _____ | _____ |
-| `imprimirTicket` | _____ | _____ | _____ |
-| _____ | _____ | _____ | _____ |
+| `calcularIVA` | base imponible, porcentaeje iva | el monto del iva | funcion |
+| `imprimirTicket` | 
+
+nombre, cantidad, precio, subtotal, descuento, IVA y total | Nada, solamente muestra el ticket | procedimiento |
+| calculartotal | base imponible, iva | el total | funcion |
 
 <!-- Tu receta va en el archivo RECETA.md. Aquí solo responde las preguntas. -->
 
-**¿Probé mi receta a mano con mis 3 casos?** Sí / No
-**¿Tuve que corregirla? ¿Qué cambié?** _____
+**¿Probé mi receta a mano con mis 3 casos?** Sí
+**¿Tuve que corregirla? ¿Qué cambié?** Sí, revisé los cálculos para asegurarme de que el IVA se aplicara después de restar el descuento y que el total fuera correcto.
 
 ## 8. Cómo compilar y ejecutar (Fase 3)
 
@@ -127,13 +129,26 @@ Ejecutar en Windows:
 .\ticket.exe
 ```
 
-**¿En qué sistema operativo trabajé?** _____
+**¿En qué sistema operativo trabajé?** Windows
 
 ## 9. Ejemplo de ejecución (Fase 3)
 <!-- Pega aquí lo que muestra tu programa en pantalla con el caso 2 de la tabla de pruebas (Cuaderno, 50, 2, 10). -->
 
 ```
-_____
+ SISTEMA DE VENTAS MECATRONICA 
+Ingrese el nombre del producto: Cuaderno
+Ingrese el precio unitario: 50
+Ingrese la cantidad de piezas: 2
+Ingrese el porcentaje de descuento (0-99): 10
+
+ TICKET DE VENTA 
+Producto: Cuaderno
+Cantidad: 2
+Precio unitario: $50.00
+Subtotal: $100.00
+Descuento: $10.00
+IVA (16%): $14.40
+TOTAL: $104.40
 ```
 
 ## 10. De la receta al código (Fase 3)
@@ -141,20 +156,53 @@ _____
 
 | Paso de la receta | Módulo o instrucción de C++ que lo implementa |
 |---|---|
-| 1. Mensaje de bienvenida | _____ |
-| _____ | _____ |
-| _____ | _____ |
-| _____ | _____ |
-| _____ | _____ |
+1. Mensaje de bienvenida
 
+std::cout
+
+2. Solicitar el nombre del producto
+
+leerCadena()
+
+3. Solicitar y validar el precio
+
+leerDecimal() y while
+
+4. Solicitar y validar la cantidad
+
+leerEntero() y while
+
+5. Solicitar y validar el descuento
+
+leerDecimal() y while
+
+6. Calcular el subtotal
+
+precio * cantidad
+
+7. Calcular el descuento
+
+subtotal * descuento / 100.0
+
+8. Calcular el IVA
+
+baseImponible * 16.0 / 100.0
+
+9. Calcular el total
+
+baseImponible + iva
+
+10. Imprimir el ticket
+
+imprimirTicket()
 **¿Hubo algún paso de mi receta que me costó traducir a C++? ¿Cuál y por qué?**
-_____
+Sí, la parte de las validaciones con while, porque tuve que entender cómo hacer que el programa volviera a solicitar un dato cuando el usuario escribiera un valor incorrecto.
 
 **Formato del ticket: ¿qué ancho usé en `std::setw` y por qué? ¿Qué pasa si uso un número menor que el largo de la etiqueta más larga?**
-_____
+En mi código actual no utilicé std::setw, porque imprimí los datos directamente. Si utilizo un ancho menor que el largo de una etiqueta, el texto no se ajustará correctamente y podría perderse la alineación.
 
 **¿Convertí el ancho de las líneas del ticket (36) en una constante? ¿Cómo la llamé? Si no, ¿por qué?**
-_____
+No, todavía no lo convertí en una constante porque mi versión actual imprime el ticket sin utilizar un ancho fijo de 36 caracteres.
 
 ## 11. Experimentos y depuración (Fase 3)
 
@@ -162,23 +210,29 @@ _____
 
 | Paso de depuración | Lo que hice o encontré |
 |---|---|
-| 1. Reproduce: ¿con qué datos falló? | _____ |
-| 2. Aísla: ¿qué valor intermedio estaba mal? (salidas `[DEBUG]`) | _____ |
-| 3. Explica: ¿cuál era la causa? | _____ |
-| 4. Corrige: ¿qué cambiaste? | _____ |
-| 5. Limpia: ¿comentaste tus salidas `[DEBUG]`? | _____ |
+| 1. Reproduce: ¿con qué datos falló? | 
 
-**La prueba con 0 % pasó aunque la función tenía un error. ¿Qué me enseña eso sobre elegir mis casos de prueba?**
-_____
+Se debe probar con un descuento diferente de 0, por ejemplo, 10 %. |
+| 2. Aísla: ¿qué valor intermedio estaba mal? (salidas `[DEBUG]`) | El monto del descuento que se obtiene al aplicar el porcentaje al subtotal. |
+| 3. Explica: ¿cuál era la causa? | Un error en la fórmula o en la operación utilizada para calcular el porcentaje. |
+| 4. Corrige: ¿qué cambiaste? | Revisé la fórmula para multiplicar el subtotal por el porcentaje y dividirlo entre 100. |
+| 5. Limpia: ¿comentaste tus salidas `[DEBUG]`? | Se deben comentar o eliminar después de terminar la depuración. |
 
-**Experimento B: al cambiar el IVA a 8 %, ¿cuántas líneas tuve que cambiar? ¿Qué mejoraría?**
-_____
+La prueba con 0 % pasó aunque la función tenía un error. ¿Qué me enseña eso sobre elegir mis casos de prueba?
 
-**¿Mi ticket seguía diciendo `IVA (16%)`? ¿Qué hice al respecto?**
-_____
+Me enseña que no es suficiente probar solamente un caso. También hay que utilizar diferentes porcentajes para encontrar errores que no aparecen cuando el descuento es cero.
 
-**Experimento C (opcional): al cambiar el parámetro dentro de `calcularIVA`, ¿cambió la variable de `main()`? ¿Por qué?**
-_____
+Experimento B: al cambiar el IVA a 8 %, ¿cuántas líneas tuve que cambiar? ¿Qué mejoraría?
+
+En mi código actual tendría que cambiar dos líneas: la fórmula del IVA y el texto que aparece en el ticket. Mejoraría creando una constante para el porcentaje del IVA, para modificarlo desde un solo lugar.
+
+¿Mi ticket seguía diciendo IVA (16%)? ¿Qué hice al respecto?
+
+Sí, porque el texto estaba escrito directamente en el código. Tendría que cambiarlo a IVA (8%) para que coincida con el nuevo porcentaje.
+
+Experimento C (opcional): al cambiar el parámetro dentro de calcularIVA, ¿cambió la variable de main()? ¿Por qué?
+
+No necesariamente, porque si el parámetro se recibe por valor, solamente cambia la copia que utiliza la función y no la variable original de main().
 
 ## 12. La constante "Le atendio" (Fase 3)
 
@@ -188,16 +242,16 @@ _____
 - [ ] Función que siempre devuelve la misma cadena
 
 **¿Por qué elegí esa opción?**
-_____
+Todavía no he implementado esa constante en mi código actual. Una buena opción sería definirla en ticket.h para poder utilizarla en diferentes partes del programa.
 
 **¿Qué otras partes del programa podrían necesitar el nombre de quien atiende? (un mensaje de bienvenida, un ticket de devolución...)**
-_____
+Podría utilizarse en el mensaje de bienvenida, en el ticket de compra y en los tickets de devolución para identificar quién realizó la atención.
 
 **Si mañana atiende otra persona, ¿en cuántos lugares tengo que cambiar el nombre?**
-_____
+Si utilizo una constante, solamente tendría que cambiar el nombre en un lugar y el resto del programa utilizaría el nuevo valor.
 
 **Si el nombre se leyera del teclado o de un archivo, ¿cuánto código tendría que cambiar con mi opción?**
-_____
+Tendría que modificar principalmente la parte donde se obtiene el nombre para leerlo desde el teclado o desde un archivo, en lugar de tenerlo escrito directamente en una constante.
 
 ## 13. Tabla de pruebas (Fase 4)
 <!-- Los datos de entrada de cada caso están en PRACTICA.md, Fase 4. -->
